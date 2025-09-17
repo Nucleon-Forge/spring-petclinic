@@ -4,24 +4,13 @@ image:
   repository: cr.yandex/crp6df803tpunh81uuum/petclinic/petclinic
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "3.0.13-SNAPSHOT"
+  tag: "3.5.0-SNAPSHOT"
 
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
 profiles: ""
-
-serviceAccount:
-  # Specifies whether a service account should be created
-  create: true
-  # Automatically mount a ServiceAccount's API credentials?
-  automount: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
 
 podAnnotations: {}
 podLabels: {}
@@ -40,22 +29,6 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 8080
-
-ingress:
-  enabled: true
-  className: "nginx"
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
-  hosts:
-    - host: test.petclinic.nucleon-forge.com
-      paths:
-        - path: /
-          pathType: Prefix
-  tls: []
-  #  - secretName: chart-example-tls
-  #    hosts:
-  #      - test.axile.nucleon-forge.com
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

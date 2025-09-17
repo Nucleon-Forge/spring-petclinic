@@ -22,9 +22,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.DisabledInNativeImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.samples.petclinic.owner.PetTypeRepository;
+import org.springframework.samples.petclinic.owner.OwnerRepository;
+import org.springframework.test.context.aot.DisabledInAotMode;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
@@ -44,10 +47,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @author Colin But
  * @author Wick Dynex
  */
-
 @WebMvcTest(value = PetController.class,
 		includeFilters = @ComponentScan.Filter(value = PetTypeFormatter.class, type = FilterType.ASSIGNABLE_TYPE))
 @DisabledInNativeImage
+@DisabledInAotMode
 class PetControllerTests {
 
 	private static final int TEST_OWNER_ID = 1;
@@ -57,10 +60,10 @@ class PetControllerTests {
 	@Autowired
 	private MockMvc mockMvc;
 
-	@MockBean
+	@MockitoBean
 	private OwnerRepository owners;
 
-	@MockBean
+	@MockitoBean
 	private PetTypeRepository types;
 
 	@BeforeEach
