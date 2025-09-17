@@ -46,14 +46,14 @@ spec:
             failureThreshold: 10
             httpGet:
               path: {{ .Values.liveness.path }}
-              port: 8081
+              port: {{ .Values.service.port }}
           readinessProbe:
             initialDelaySeconds: {{ .Values.readiness.delay }}
             periodSeconds: {{ .Values.readiness.timeout }}
             failureThreshold: 10
             httpGet:
               path: {{ .Values.readiness.path }}
-              port: 8081
+              port: {{ .Values.service.port }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- with .Values.volumeMounts }}
