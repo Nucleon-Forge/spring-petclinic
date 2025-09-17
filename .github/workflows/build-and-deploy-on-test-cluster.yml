@@ -66,4 +66,4 @@ jobs:
           touch ~/.kube/config
           echo "$KUBE_CONFIG_BASE64" | base64 --decode > ~/.kube/config
           chmod 600 ~/.kube/config
-          helm upgrade --install petclinic . -f values.yaml
+          helm upgrade --install petclinic . --set image.ref=$CR_URL/$CR_REPOSITORY/spring-petclinic:3.5.0-SNAPSHOT -f values.yaml

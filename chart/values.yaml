@@ -1,10 +1,9 @@
 replicaCount: 1
 
 image:
-  repository: cr.yandex/crp6df803tpunh81uuum/petclinic/petclinic
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "3.5.0-SNAPSHOT"
+  ref: "3.5.0-SNAPSHOT"
 
 imagePullSecrets: []
 nameOverride: ""
