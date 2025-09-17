@@ -60,7 +60,7 @@ jobs:
 
       - name: Deploy spring-petclinic to K8S
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        working-directory: spring-petclinic/chart
+        working-directory: chart
         run: |
           mkdir -p ~/.kube
           touch ~/.kube/config
