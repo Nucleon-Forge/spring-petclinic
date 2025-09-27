@@ -11,7 +11,6 @@ fullnameOverride: ""
 
 profiles: ""
 
-podAnnotations: {}
 podLabels: {}
 
 podSecurityContext: {}
