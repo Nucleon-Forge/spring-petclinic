@@ -297,6 +297,7 @@
     <repository>
       <snapshots>
         <enabled>true</enabled>
+        <updatePolicy>never</updatePolicy>
       </snapshots>
       <id>spring-snapshots</id>
       <name>Spring Snapshots</name>
@@ -314,6 +315,10 @@
       <id>nucleon-forge-axile</id>
       <name>Nucleon Forge Axile</name>
       <url>https://maven.pkg.github.com/Nucleon-Forge/axile</url>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+      </snapshots>
     </repository>
   </repositories>
   <pluginRepositories>
