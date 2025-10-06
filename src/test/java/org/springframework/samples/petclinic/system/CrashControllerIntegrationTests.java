@@ -46,8 +46,8 @@ import org.springframework.http.ResponseEntity;
  * @author Alex Lutz
  */
 // NOT Waiting https://github.com/spring-projects/spring-boot/issues/5574
-@SpringBootTest(webEnvironment = RANDOM_PORT,
-		properties = { "server.error.include-message=ALWAYS", "management.endpoints.enabled-by-default=false" })
+@SpringBootTest(webEnvironment = RANDOM_PORT, properties = { "server.error.include-message=ALWAYS",
+		"management.endpoints.enabled-by-default=false", "management.endpoint.health.enabled=true" })
 class CrashControllerIntegrationTests {
 
 	@Value(value = "${local.server.port}")
