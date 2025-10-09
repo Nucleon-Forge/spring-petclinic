@@ -42,7 +42,7 @@ public interface VetRepository extends Repository<Vet, Integer> {
 	 * @return a <code>Collection</code> of <code>Vet</code>s
 	 */
 	@Transactional(readOnly = true)
-	@Cacheable("vets")
+	@Cacheable(value = "vets", key = "'key'")
 	Collection<Vet> findAll() throws DataAccessException;
 
 	/**
