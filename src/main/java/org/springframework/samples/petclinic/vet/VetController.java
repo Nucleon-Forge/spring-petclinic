@@ -17,6 +17,7 @@ package org.springframework.samples.petclinic.vet;
 
 import java.util.List;
 
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -37,8 +38,11 @@ class VetController {
 
 	private final VetRepository vetRepository;
 
-	public VetController(VetRepository vetRepository) {
+	private final ApplicationContext applicationContext;
+
+	public VetController(VetRepository vetRepository, ApplicationContext applicationContext) {
 		this.vetRepository = vetRepository;
+		this.applicationContext = applicationContext;
 	}
 
 	@GetMapping("/vets.html")
