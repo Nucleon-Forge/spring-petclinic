@@ -1,9 +1,10 @@
 package org.springframework.samples.petclinic.scheduled;
 
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.lang.Nullable;
 import org.springframework.scheduling.Trigger;
 import org.springframework.scheduling.TriggerContext;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -30,7 +31,6 @@ public class SchedulerTestConfig implements SchedulingConfigurer {
 	/**
 	 * CRON
 	 */
-	@Scheduled(cron = "*/5 * * * * *")
 	@Scheduled(cron = "*/2 * * * * *")
 	public void cronTask() {
 		log.info("Running CRON task");
@@ -58,22 +58,31 @@ public class SchedulerTestConfig implements SchedulingConfigurer {
 	 */
 	@Override
 	public void configureTasks(ScheduledTaskRegistrar registrar) {
-		registrar.addTriggerTask(this::customTriggerTask, new CustomTrigger());
+		registrar.addTriggerTask(new CustomTestTask(), new CustomTestTrigger());
 	}
 
-	private void customTriggerTask() {
-		log.info("Running CUSTOM trigger task");
+	static class CustomTestTask implements Runnable {
+		@Override
+		public void run() {
+			log.info("Running CUSTOM task");
+		}
+
+		@Override
+		public String toString() {
+			return "customTestTask";
+		}
 	}
 
-	static class CustomTrigger implements Trigger {
+	static class CustomTestTrigger implements Trigger {
 		@Override
 		@Nullable
-		public Instant nextExecution(TriggerContext triggerContext) {
-			Instant lastCompletion = triggerContext.lastCompletion();
-			if (lastCompletion == null) {
-				return Instant.now().plusSeconds(1);
-			}
-			return lastCompletion.plusSeconds(2);
+		public Instant nextExecution(@NonNull TriggerContext triggerContext) {
+			return Instant.now().plusSeconds(2);
+		}
+
+		@Override
+		public String toString() {
+			return "customTrigger";
 		}
 	}
 }
