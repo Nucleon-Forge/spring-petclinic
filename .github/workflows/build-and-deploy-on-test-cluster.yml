@@ -11,6 +11,8 @@ jobs:
   build-source:
     runs-on: ubuntu-latest
     env:
+      # Since this path is used in multiple places, it’s better to store it in a separate variable.
+      SPRING_PET_CLINIC: spring-petclinic:3.5.0-SNAPSHOT
       # Variables and credentials for downloading dependencies from Nexus
       NEXUS_USER: ${{ secrets.NEXUS_USER }}
       NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
@@ -48,7 +50,7 @@ jobs:
       - name: Build Docker Image
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
         run: |
-          docker build --tag $CR_URL/$CR_REPOSITORY/spring-petclinic:3.5.0-SNAPSHOT --file docker/Dockerfile .
+          docker build --tag $CR_URL/$CR_REPOSITORY/$SPRING_PET_CLINIC --file docker/Dockerfile .
 
       - name: Docker login to Yandex Cloud CR
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
@@ -56,7 +58,7 @@ jobs:
 
       - name: Docker push to Yandex Cloud CR
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
-        run: docker push $CR_URL/$CR_REPOSITORY/spring-petclinic:3.5.0-SNAPSHOT
+        run: docker push $CR_URL/$CR_REPOSITORY/$SPRING_PET_CLINIC
 
       - name: Docker logout
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' }}
@@ -76,4 +78,4 @@ jobs:
           touch ~/.kube/config
           echo "$KUBE_CONFIG_BASE64" | base64 --decode > ~/.kube/config
           chmod 600 ~/.kube/config
-          helm upgrade --install petclinic . --set image.ref=$CR_URL/$CR_REPOSITORY/spring-petclinic:3.5.0-SNAPSHOT -f values.yaml
+          helm upgrade --install petclinic . --set image.ref=$CR_URL/$CR_REPOSITORY/$SPRING_PET_CLINIC -f values.yaml
