@@ -2,8 +2,22 @@
 	<servers>
 		<server>
 			<id>nucleon-forge-axile</id>
-			<username>${env.USERNAME}</username>
-			<password>${env.TOKEN}</password>
+			<username>${env.NEXUS_USER}</username>
+			<password>${env.NEXUS_PASSWORD}</password>
 		</server>
 	</servers>
+
+	<profiles>
+		<profile>
+			<id>ci-nexus</id>
+			<properties>
+				<nexus.url>${env.NEXUS_URL}</nexus.url>
+				<nexus.repo.id>nucleon-forge-axile</nexus.repo.id>
+			</properties>
+		</profile>
+	</profiles>
+
+	<activeProfiles>
+		<activeProfile>ci-nexus</activeProfile>
+	</activeProfiles>
 </settings>
