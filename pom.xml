@@ -312,9 +312,12 @@
       <url>https://repo.spring.io/milestone</url>
     </repository>
     <repository>
-      <id>nucleon-forge-axile</id>
+      <id>nexus</id>
       <name>Nucleon Forge Axile</name>
-      <url>https://maven.pkg.github.com/Nucleon-Forge/axile</url>
+      <url>https://158.160.69.73:8443/repository/axile-monorepo/</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
       <snapshots>
         <enabled>true</enabled>
         <updatePolicy>always</updatePolicy>
