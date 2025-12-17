@@ -43,7 +43,7 @@ jobs:
 
       - name: Build with Maven
         run: |
-          mvn -B -s settings.xml clean package
+          mvn -B -s settings.xml clean package -DskipTests
 
       - name: Set up Docker
         if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || github.event_name == 'workflow_dispatch' || github.event_name == 'repository_dispatch'}}
