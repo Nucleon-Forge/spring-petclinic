@@ -29,41 +29,31 @@ public class SchedulerTestConfig implements SchedulingConfigurer {
 		try {
 			reentrantLock.lock();
 
-			log.info(
-				"Thread {} with id {} ENTERED the re-entrant lock",
-				Thread.currentThread().getName(),
-				Thread.currentThread().getId()
-			);
+			log.info("Thread {} with id {} ENTERED the re-entrant lock", Thread.currentThread().getName(),
+					Thread.currentThread().getId());
 
 			Thread.sleep(120000);
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e) {
 			throw new RuntimeException(e);
-		} finally {
+		}
+		finally {
 			reentrantLock.unlock();
-			log.info(
-				"Thread {} with id {} RELEASED the re-entrant lock",
-				Thread.currentThread().getName(),
-				Thread.currentThread().getId()
-			);
+			log.info("Thread {} with id {} RELEASED the re-entrant lock", Thread.currentThread().getName(),
+					Thread.currentThread().getId());
 		}
 	}
 
 	@Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
 	public void synchronizedBlockTask() throws InterruptedException {
 		synchronized (this) {
-			log.info(
-				"Thread {} with id {} ENTERED the synchronized lock",
-				Thread.currentThread().getName(),
-				Thread.currentThread().getId()
-			);
+			log.info("Thread {} with id {} ENTERED the synchronized lock", Thread.currentThread().getName(),
+					Thread.currentThread().getId());
 
 			Thread.sleep(120000);
 
-			log.info(
-				"Thread {} with id {} RELEASED the synchronized lock",
-				Thread.currentThread().getName(),
-				Thread.currentThread().getId()
-			);
+			log.info("Thread {} with id {} RELEASED the synchronized lock", Thread.currentThread().getName(),
+					Thread.currentThread().getId());
 		}
 	}
 
