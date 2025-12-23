@@ -1,7 +1,12 @@
 package org.springframework.samples.petclinic.scheduled;
 
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.locks.ReentrantLock;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 import org.springframework.scheduling.Trigger;
@@ -11,13 +16,56 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 
-import java.time.Instant;
-
 @Configuration
 @EnableScheduling
 public class SchedulerTestConfig implements SchedulingConfigurer {
 
 	private static final Logger log = LoggerFactory.getLogger(SchedulerTestConfig.class);
+
+	private final ReentrantLock reentrantLock = new ReentrantLock(true);
+
+	@Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
+	public void reEntrantLockTask() {
+		try {
+			reentrantLock.lock();
+
+			log.info(
+				"Thread {} with id {} ENTERED the re-entrant lock",
+				Thread.currentThread().getName(),
+				Thread.currentThread().getId()
+			);
+
+			Thread.sleep(120000);
+		} catch (InterruptedException e) {
+			throw new RuntimeException(e);
+		} finally {
+			reentrantLock.unlock();
+			log.info(
+				"Thread {} with id {} RELEASED the re-entrant lock",
+				Thread.currentThread().getName(),
+				Thread.currentThread().getId()
+			);
+		}
+	}
+
+	@Scheduled(fixedDelay = 10, timeUnit = TimeUnit.SECONDS)
+	public void synchronizedBlockTask() throws InterruptedException {
+		synchronized (this) {
+			log.info(
+				"Thread {} with id {} ENTERED the synchronized lock",
+				Thread.currentThread().getName(),
+				Thread.currentThread().getId()
+			);
+
+			Thread.sleep(120000);
+
+			log.info(
+				"Thread {} with id {} RELEASED the synchronized lock",
+				Thread.currentThread().getName(),
+				Thread.currentThread().getId()
+			);
+		}
+	}
 
 	/**
 	 * CRON
